@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.ts",
     "build": "tsc",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "seed": "ts-node src/testData/seeder.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "axios": "^0.25.0",
     "cron": "^1.8.2",
     "dotenv": "^14.3.0",
     "mongoose": "^6.1.8"

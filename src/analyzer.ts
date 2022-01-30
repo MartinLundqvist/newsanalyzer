@@ -1,8 +1,9 @@
-import { IAnalysis } from './models/analyses';
+import { IAnalysis, IMarketData } from './models/analyses';
 import { IHeadlines } from './models/headlines';
 
 export const createAnalysis = (
   headlines: IHeadlines[],
+  marketData: IMarketData,
   date: Date
 ): IAnalysis => {
   // Start by creating the results array
@@ -11,6 +12,7 @@ export const createAnalysis = (
     count: 0,
     unique: 0,
     headlines: [],
+    market_data: marketData,
   };
 
   // Loop through and create the raw results
