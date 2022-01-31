@@ -17,8 +17,6 @@ const start = async () => {
 
   console.log('Node environment is set to ' + ENV);
 
-  await connectToDB();
-
   const job = new CronJob(
     '0 0 5 * * *',
     async () => {
