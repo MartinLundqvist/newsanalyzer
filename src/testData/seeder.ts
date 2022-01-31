@@ -5,7 +5,7 @@ import { getHeadlines } from '../models/headlines';
 import { createNewArray } from './historicalDataTests';
 
 /**
- * DO NOT USE THIS FUNCTION ANYMORE - IT CONTAINS DANGEROUS LEGACY CODE AND WILL MESS UP THE DB!
+ * Be careful with this sucker...
  */
 
 export const seed = async () => {
