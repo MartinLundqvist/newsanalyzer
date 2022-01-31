@@ -1,10 +1,11 @@
-import { IAnalysis, IMarketData } from './models/analyses';
-import { IHeadlines } from './models/headlines';
+import { IAnalysis, IMarketData } from '../models/analyses';
+import { IHeadlines } from '../models/headlines';
+import { DateTime } from 'luxon';
 
 export const createAnalysis = (
   headlines: IHeadlines[],
   marketData: IMarketData,
-  date: Date
+  date: DateTime
 ): IAnalysis => {
   // Start by creating the results array
   let results: IAnalysis = {

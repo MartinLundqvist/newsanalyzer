@@ -1,4 +1,4 @@
-import { connectToDB } from '../database';
+import { connectToDB } from '../models/database';
 import { AnalysisModel } from '../models/analyses';
 import { historicalMarketData } from './historicalMarketNumbers';
 import { testData as marketSummaryResponse } from './marketSummaryResponse';

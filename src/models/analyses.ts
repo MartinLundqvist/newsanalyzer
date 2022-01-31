@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { DateTime } from 'luxon';
 
 export interface IHeadlineEntry {
   headline: string;
@@ -18,7 +19,7 @@ export interface IMarketData {
 }
 
 export interface IAnalysis {
-  date: Date;
+  date: DateTime;
   count: number;
   unique: number;
   headlines: IHeadlineEntry[];
@@ -66,7 +67,7 @@ const HeadlineEntrySchema = new mongoose.Schema<IHeadlineEntry>({
 const AnalysisSchema = new mongoose.Schema<IAnalysis>({
   date: {
     type: Date,
-    default: new Date(),
+    default: DateTime.now().setZone('Europe/Paris'),
   },
   count: {
     type: Number,
@@ -77,24 +78,3 @@ const AnalysisSchema = new mongoose.Schema<IAnalysis>({
 });
 
 export const AnalysisModel = mongoose.model('analysis', AnalysisSchema);
-
-export const saveAnalysis = async (analysis: IAnalysis) => {
-  try {
-    console.log('Saving analysis for ' + analysis.date.toISOString());
-
-    // First check if an analysis already exists in the databse
-    const dbAnalysis = await AnalysisModel.findOne({ date: analysis.date });
-
-    if (dbAnalysis) {
-      dbAnalysis.overwrite(analysis);
-      await dbAnalysis.save();
-      console.log('Updated an existing analysis entry. ');
-    } else {
-      await AnalysisModel.create(analysis);
-      console.log('Saved new analysis entry. ');
-    }
-  } catch (err) {
-    console.log('Error saving analysis for ' + analysis.date.toISOString());
-    console.log(err);
-  }
-};

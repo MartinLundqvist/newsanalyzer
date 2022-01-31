@@ -1,42 +1,50 @@
-import { getHeadlines } from './models/headlines';
+import { getHeadlines } from './controllers/getHeadlines';
 import { CronJob } from 'cron';
-import { createAnalysis } from './analyzer';
-import { connectToDB } from './database';
-import { saveAnalysis } from './models/analyses';
-import { getMarketData } from './marketDataFetcher';
+import { DateTime } from 'luxon';
+import { createAnalysis } from './utils/analyzer';
+import { connectToDB } from './models/database';
+import { saveAnalysis } from './controllers/saveAnalysis';
+import { getMarketData } from './controllers/fetchMarketData';
 
 const start = async () => {
-  // This should run every day at 05:00:00am - assuming a deployment in UTC timezone, by the way.
-  const job = new CronJob('0 0 5 * * *', async () => {
-    await connectToDB();
-    const today = new Date();
-    const yesterday = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() - 1
-    );
-    const headlines = await getHeadlines(yesterday);
-    const marketData = await getMarketData(yesterday);
-    const headlineAnalysis = createAnalysis(headlines, marketData, yesterday);
-    await saveAnalysis(headlineAnalysis);
-  });
+  // This should run every day at 05:00:00am CET.
+  const job = new CronJob(
+    '0 0 5 * * *',
+    async () => {
+      await connectToDB();
+      const todayCET = DateTime.now().setZone('Europe/Paris');
+      const yesterdayStartCET = todayCET.minus({ days: 1 }).startOf('day');
+      const headlines = await getHeadlines(yesterdayStartCET);
+      const marketData = await getMarketData(yesterdayStartCET);
+      const headlineAnalysis = createAnalysis(
+        headlines,
+        marketData,
+        yesterdayStartCET
+      );
+      await saveAnalysis(headlineAnalysis);
+    },
+    null,
+    false,
+    'Europe/Paris'
+  );
 
   job.start();
 };
 
-const testAll = async () => {
-  await connectToDB();
-  const today = new Date();
-  const yesterday = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() - 1
-  );
-  const headlines = await getHeadlines(yesterday);
-  const marketData = await getMarketData(yesterday);
-  const headlineAnalysis = createAnalysis(headlines, marketData, yesterday);
-  await saveAnalysis(headlineAnalysis);
-};
+// const testAll = async () => {
+//   await connectToDB();
+//   const todayCET = DateTime.now().setZone('Europe/Paris');
+//   const yesterdayStartCET = todayCET.minus({ days: 1 }).startOf('day');
+//   const headlines = await getHeadlines(yesterdayStartCET);
+
+//   const marketData = await getMarketData(yesterdayStartCET);
+//   const headlineAnalysis = createAnalysis(
+//     headlines,
+//     marketData,
+//     yesterdayStartCET
+//   );
+//   await saveAnalysis(headlineAnalysis);
+// };
 
 // Main function (uncomment to go live)
 start();

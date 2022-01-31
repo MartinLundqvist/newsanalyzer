@@ -3,5 +3,5 @@
 # The scope of those analyses is intended to be:
 
 - Headline frequency (Done)
-- Market data (TBD)
+- Market data (Done)
 - Sentiment analysis of headlines (TBD)

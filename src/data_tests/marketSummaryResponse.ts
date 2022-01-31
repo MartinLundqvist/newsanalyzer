@@ -1,4 +1,6 @@
-export const testData = {
+import { IMarketSummaryResponse } from '../controllers/fetchMarketData';
+
+export const testData: IMarketSummaryResponse = {
   marketSummaryResponse: {
     result: [
       {
