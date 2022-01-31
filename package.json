@@ -5,9 +5,9 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.ts",
+    "dev": "NODE_ENV=development nodemon src/index.ts",
     "build": "rm -rf build && tsc",
-    "start": "node build/index.js",
+    "start": "NODE_ENV=production node build/index.js",
     "seed": "ts-node src/testData/seeder.ts"
   },
   "keywords": [],

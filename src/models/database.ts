@@ -3,12 +3,15 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const DB_STRING = process.env.DB_STRING || '';
+const ENV = process.env.NODE_ENV;
+
+const DB_STRING =
+  ENV === 'production' ? process.env.DB_STRING : process.env.DB_STRING_LOCAL;
 
 export const connectToDB = async () => {
   try {
     console.log('Mongoose ready state is: ' + mongoose.connection.readyState);
-    await mongoose.connect(DB_STRING);
+    await mongoose.connect(DB_STRING || '');
     console.log('Mongoose ready state is: ' + mongoose.connection.readyState);
     console.log('Connected to mongodb');
   } catch (err) {
