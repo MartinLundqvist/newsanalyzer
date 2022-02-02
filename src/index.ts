@@ -2,7 +2,7 @@ import { getHeadlines } from './controllers/getHeadlines';
 import { CronJob } from 'cron';
 import { DateTime } from 'luxon';
 import { createAnalysis } from './utils/analyzer';
-import { connectToDB } from './models/database';
+import { closeDBConnection, connectToDB } from './models/database';
 import { saveAnalysis } from './controllers/saveAnalysis';
 import { getMarketData } from './controllers/fetchMarketData';
 
@@ -41,6 +41,12 @@ const start = async () => {
 };
 
 start();
+
+process.on('SIGINT', async () => {
+  console.log('Received SIGINT - closing down.');
+  await closeDBConnection();
+  process.exit(0);
+});
 
 // const testAll = async () => {
 //   await connectToDB();
