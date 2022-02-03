@@ -1,9 +1,7 @@
 import { connectToDB } from '../models/database';
 import { AnalysisModel } from '../models/analyses';
-import { historicalMarketData } from './historicalMarketNumbers';
+import { historicalMarketData } from './historicalMarketNumbers2';
 import { testData as marketSummaryResponse } from './marketSummaryResponse';
-
-type TMarketHistory = typeof historicalMarketData;
 
 export interface INewArray {
   [timestamp: number]: {

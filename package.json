@@ -8,7 +8,8 @@
     "dev": "NODE_ENV=development nodemon src/index.ts",
     "build": "rm -rf build && tsc",
     "start": "NODE_ENV=production node build/index.js",
-    "seed": "ts-node src/testData/seeder.ts"
+    "seed:dev": "ts-node src/data_tests/seeder.ts",
+    "seed:prod": "NODE_ENV=production ts-node src/data_tests/seeder.ts"
   },
   "keywords": [],
   "author": "",

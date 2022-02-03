@@ -12,11 +12,11 @@ import { DateTime } from 'luxon';
 
 export const seed = async () => {
   await connectToDB();
-  const todayCET = DateTime.now().setZone('Europe/Paris');
+  const todayCET = DateTime.now().setZone('Europe/Paris').startOf('day');
   const market = createNewArray();
 
-  for (let days = 0; days < 53; days++) {
-    const previousDay = todayCET.minus({ days: 1 });
+  for (let days = 0; days < 60; days++) {
+    const previousDay = todayCET.minus({ days: days });
     console.log(previousDay.toString());
     const headlines = await getHeadlines(previousDay);
     if (headlines.length > 0) {
