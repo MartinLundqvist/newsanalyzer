@@ -1,8 +1,22 @@
 import mongoose from 'mongoose';
 import { DateTime } from 'luxon';
 
+export type TNewsPaper =
+  | 'SVD'
+  | 'Aftonbladet'
+  | 'Sydsvenskan'
+  | 'GP'
+  | 'DN'
+  | 'Expressen'
+  | 'WSJ'
+  | 'Guardian';
+
+export type TLanguage = 'en' | 'se';
+
 export interface IHeadlineEntry {
   headline: string;
+  language: TLanguage;
+  newspaper: TNewsPaper;
   count: number;
   share_of_total: number;
 }
@@ -53,6 +67,14 @@ const HeadlineEntrySchema = new mongoose.Schema<IHeadlineEntry>({
   headline: {
     type: String,
     default: 'Empty',
+  },
+  language: {
+    type: String,
+    default: 'se',
+  },
+  newspaper: {
+    type: String,
+    default: 'SVD',
   },
   count: {
     type: Number,

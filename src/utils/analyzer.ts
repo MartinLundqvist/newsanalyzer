@@ -1,5 +1,5 @@
-import { IAnalysis, IMarketData } from '../models/analyses';
-import { IHeadlines } from '../models/headlines';
+import { IAnalysis, IMarketData, TLanguage } from '../models/analyses';
+import { IHeadlines, TNewsPaper } from '../models/headlines';
 import { DateTime } from 'luxon';
 
 export const createAnalysis = (
@@ -30,6 +30,8 @@ export const createAnalysis = (
         results.unique += 1;
         results.headlines.push({
           headline: headline.headline,
+          newspaper: entry.newspaper,
+          language: getLanguage(entry.newspaper),
           count: 0,
           share_of_total: 0,
         });
@@ -47,4 +49,15 @@ export const createAnalysis = (
   results.headlines.sort((a, b) => b.count - a.count);
 
   return results;
+};
+
+export const getLanguage = (newspaper: TNewsPaper): TLanguage => {
+  switch (newspaper) {
+    case 'WSJ':
+      return 'en';
+    case 'Guardian':
+      return 'en';
+    default:
+      return 'se';
+  }
 };
