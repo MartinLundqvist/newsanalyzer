@@ -1,6 +1,7 @@
 import { IAnalysis, IMarketData, TLanguage } from '../models/analyses';
 import { IHeadlines, TNewsPaper } from '../models/headlines';
 import { DateTime } from 'luxon';
+import { getSentimentEN } from './sentiment';
 
 export const createAnalysis = (
   headlines: IHeadlines[],
@@ -14,6 +15,7 @@ export const createAnalysis = (
     unique: 0,
     headlines: [],
     market_data: marketData,
+    average_sentiment: 0,
   };
 
   // Loop through and create the raw results
@@ -28,22 +30,38 @@ export const createAnalysis = (
         resultHeadline.count += 1;
       } else {
         results.unique += 1;
+        let language = getLanguage(entry.newspaper);
         results.headlines.push({
           headline: headline.headline,
           newspaper: entry.newspaper,
-          language: getLanguage(entry.newspaper),
+          language: language,
           count: 0,
           share_of_total: 0,
+          sentiment: language === 'en' ? getSentimentEN(headline.headline) : 0,
         });
       }
     }
   }
 
-  // Loop again to add the share of total
+  // Loop again to add the share of total, and the contribution to the overall sentiment
+  // We need to keep track of total share of all english headlines because we only extract sentiment on english papers
+
+  let totalEnglishSentiment = 0;
+  let shareOfTotalEnglishHeadlines = 0;
 
   for (const headline of results.headlines) {
     headline.share_of_total = headline.count / results.count;
+    if (headline.language === 'en') {
+      totalEnglishSentiment += headline.share_of_total * headline.sentiment;
+      shareOfTotalEnglishHeadlines += headline.share_of_total;
+    }
   }
+
+  // Now we can calculate and add the average sentiment. If there were no english headlines (for some reason), we need add a fail safe to avoid divide by zero errors
+  results.average_sentiment =
+    shareOfTotalEnglishHeadlines > 0
+      ? totalEnglishSentiment / shareOfTotalEnglishHeadlines
+      : 0;
 
   //Then sort the thing according to highest count
   results.headlines.sort((a, b) => b.count - a.count);

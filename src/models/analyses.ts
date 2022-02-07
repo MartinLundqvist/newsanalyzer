@@ -19,6 +19,7 @@ export interface IHeadlineEntry {
   newspaper: TNewsPaper;
   count: number;
   share_of_total: number;
+  sentiment: number;
 }
 
 export interface IMarketDataPoint {
@@ -38,6 +39,7 @@ export interface IAnalysis {
   unique: number;
   headlines: IHeadlineEntry[];
   market_data: IMarketData;
+  average_sentiment: number;
 }
 
 const MarketDataSchema = new mongoose.Schema<IMarketData>({
@@ -84,6 +86,10 @@ const HeadlineEntrySchema = new mongoose.Schema<IHeadlineEntry>({
     type: Number,
     default: 0,
   },
+  sentiment: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const AnalysisSchema = new mongoose.Schema<IAnalysis>({
@@ -97,6 +103,10 @@ const AnalysisSchema = new mongoose.Schema<IAnalysis>({
   },
   headlines: [HeadlineEntrySchema],
   market_data: MarketDataSchema,
+  average_sentiment: {
+    type: Number,
+    default: 0,
+  },
 });
 
 export const AnalysisModel = mongoose.model('analysis', AnalysisSchema);
