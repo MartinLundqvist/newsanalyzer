@@ -47,23 +47,3 @@ process.on('SIGINT', async () => {
   await closeDBConnection();
   process.exit(0);
 });
-
-// const testAll = async () => {
-//   await connectToDB();
-//   const todayCET = DateTime.now().setZone('Europe/Paris');
-//   const yesterdayStartCET = todayCET.minus({ days: 1 }).startOf('day');
-//   const headlines = await getHeadlines(yesterdayStartCET);
-
-//   const marketData = await getMarketData(yesterdayStartCET);
-//   const headlineAnalysis = createAnalysis(
-//     headlines,
-//     marketData,
-//     yesterdayStartCET
-//   );
-//   await saveAnalysis(headlineAnalysis);
-// };
-
-// Main function (uncomment to go live)
-
-// Testfunctions...
-// testAll();

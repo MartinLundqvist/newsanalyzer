@@ -8,6 +8,8 @@ import { DateTime } from 'luxon';
 
 /**
  * Be careful with this sucker...
+ * Make sure to download the latest market data from yahoo before doing it.
+ * See the createNewArray function for details
  */
 
 export const seed = async () => {
