@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { getMarketData } from '../controllers/fetchMarketData';
+import { getSentiments } from '../controllers/fetchSentiments';
 import { getHeadlines } from '../controllers/getHeadlines';
 import { connectToDB } from '../models/database';
 import { createAnalysis, getLanguage } from '../utils/analyzer';
@@ -9,9 +10,13 @@ const test_getLanguage = () => {
   console.log(getLanguage('Aftonbladet'));
 };
 
-const test_getSentimentEN = () => {
-  console.log(getSentimentEN('So happy and peppy and charming'));
-  console.log(getSentimentEN('So depressed and low and sad'));
+const test_getSentiment = async () => {
+  console.log(
+    await getSentiments([
+      'So happy and peppy and charming',
+      'So depressed and low and sad',
+    ])
+  );
 };
 
 const test_createAnalysis = async (dayOffset: number) => {
@@ -21,12 +26,15 @@ const test_createAnalysis = async (dayOffset: number) => {
   const headlines = await getHeadlines(yesterdayStartCET);
 
   const marketData = await getMarketData(yesterdayStartCET);
-  const headlineAnalysis = createAnalysis(
+  const headlineAnalysis = await createAnalysis(
     headlines,
     marketData,
-    yesterdayStartCET
+    yesterdayStartCET,
+    getSentiments
   );
-  console.log(JSON.stringify(headlineAnalysis, null, 2));
+  console.log(JSON.stringify(headlineAnalysis.average_sentiment, null, 2));
 };
 
-test_createAnalysis(11);
+// test_createAnalysis(11);
+
+test_getSentiment();
