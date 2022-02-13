@@ -4,4 +4,4 @@
 
 - Headline frequency (Done)
 - Market data (Done)
-- Sentiment analysis of headlines (TBD)
+- Sentiment analysis of headlines (Done)
