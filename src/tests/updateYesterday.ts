@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { getMarketData } from '../controllers/fetchMarketData';
+import { getSentiments } from '../controllers/fetchSentiments';
 import { getHeadlines } from '../controllers/getHeadlines';
 import { saveAnalysis } from '../controllers/saveAnalysis';
 import { connectToDB } from '../models/database';
@@ -11,10 +12,11 @@ const updateYesterday = async () => {
   const yesterdayStartCET = todayCET.minus({ days: 1 }).startOf('day');
   const headlines = await getHeadlines(yesterdayStartCET);
   const marketData = await getMarketData(yesterdayStartCET);
-  const headlineAnalysis = createAnalysis(
+  const headlineAnalysis = await createAnalysis(
     headlines,
     marketData,
-    yesterdayStartCET
+    yesterdayStartCET,
+    getSentiments
   );
   await saveAnalysis(headlineAnalysis);
   return;

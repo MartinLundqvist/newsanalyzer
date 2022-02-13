@@ -5,6 +5,7 @@ import { createAnalysis } from './utils/analyzer';
 import { closeDBConnection, connectToDB } from './models/database';
 import { saveAnalysis } from './controllers/saveAnalysis';
 import { getMarketData } from './controllers/fetchMarketData';
+import { getSentimentEN } from './utils/sentiment';
 
 const ENV = process.env.NODE_ENV;
 
@@ -25,10 +26,11 @@ const start = async () => {
       const yesterdayStartCET = todayCET.minus({ days: 1 }).startOf('day');
       const headlines = await getHeadlines(yesterdayStartCET);
       const marketData = await getMarketData(yesterdayStartCET);
-      const headlineAnalysis = createAnalysis(
+      const headlineAnalysis = await createAnalysis(
         headlines,
         marketData,
-        yesterdayStartCET
+        yesterdayStartCET,
+        getSentimentEN
       );
       await saveAnalysis(headlineAnalysis);
     },

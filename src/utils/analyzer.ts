@@ -1,13 +1,14 @@
 import { IAnalysis, IMarketData, TLanguage } from '../models/analyses';
 import { IHeadlines, TNewsPaper } from '../models/headlines';
 import { DateTime } from 'luxon';
-import { getSentimentEN } from './sentiment';
+import { ISentimentFunction } from './sentiment';
 
-export const createAnalysis = (
+export const createAnalysis = async (
   headlines: IHeadlines[],
   marketData: IMarketData,
-  date: DateTime
-): IAnalysis => {
+  date: DateTime,
+  sentimentFunction: ISentimentFunction
+): Promise<IAnalysis> => {
   // Start by creating the results array
   let results: IAnalysis = {
     date: date,
@@ -18,7 +19,7 @@ export const createAnalysis = (
     average_sentiment: 0,
   };
 
-  // Loop through and create the raw results
+  // Loop through and create the raw results, minus the sentiment.
   for (const entry of headlines) {
     results.count += 1;
     for (const headline of entry.headlines) {
@@ -37,13 +38,21 @@ export const createAnalysis = (
           language: language,
           count: 0,
           share_of_total: 0,
-          sentiment: language === 'en' ? getSentimentEN(headline.headline) : 0,
+          sentiment: 0, // Placeholder
         });
       }
     }
   }
 
-  // Loop again to add the share of total, and the contribution to the overall sentiment
+  // Fetch sentiments.
+
+  const sentences = results.headlines
+    .filter((headline) => headline.language === 'en')
+    .map((headline) => headline.headline);
+
+  const sentiments = await sentimentFunction(sentences);
+
+  // Loop again to add the sentiments, share of total, and the contribution to the overall sentiment
   // We need to keep track of total share of all english headlines because we only extract sentiment on english papers
 
   let totalEnglishSentiment = 0;
@@ -52,8 +61,13 @@ export const createAnalysis = (
   for (const headline of results.headlines) {
     headline.share_of_total = headline.count / results.count;
     if (headline.language === 'en') {
+      const sentiment =
+        sentiments.find((entry) => entry.sentence === headline.headline)
+          ?.score || 0;
+      headline.sentiment = sentiment;
       totalEnglishSentiment += headline.share_of_total * headline.sentiment;
       shareOfTotalEnglishHeadlines += headline.share_of_total;
+      // console.log(headline);
     }
   }
 
