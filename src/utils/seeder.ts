@@ -1,21 +1,25 @@
-import { createAnalysis } from '../utils/analyzer';
+import { createAnalysis } from './analyzer';
 import { connectToDB } from '../models/database';
 import { IMarketData } from '../models/analyses';
 import { saveAnalysis } from '../controllers/saveAnalysis';
 import { getHeadlines } from '../controllers/getHeadlines';
-import { createNewArray } from './historicalDataTests';
+import { createMarketDataArray } from './createMarketDataArray';
 import { DateTime } from 'luxon';
+import { getSentiments } from '../controllers/fetchSentiments';
 
 /**
  * Be careful with this sucker...
- * Make sure to download the latest market data from yahoo before doing it.
- * See the createNewArray function for details
  */
 
 export const seed = async () => {
   await connectToDB();
   const todayCET = DateTime.now().setZone('Europe/Paris').startOf('day');
-  const market = createNewArray();
+  const market = await createMarketDataArray();
+
+  if (market === null) {
+    console.log('No market data found. Aborting');
+    return;
+  }
 
   for (let days = 0; days < 60; days++) {
     const previousDay = todayCET.minus({ days: days });
@@ -26,10 +30,11 @@ export const seed = async () => {
         timestamp: previousDay.toMillis(),
         data: market[previousDay.toMillis()],
       };
-      const headlineAnalysis = createAnalysis(
+      const headlineAnalysis = await createAnalysis(
         headlines,
         marketData,
-        previousDay
+        previousDay,
+        getSentiments
       );
       await saveAnalysis(headlineAnalysis);
     } else {

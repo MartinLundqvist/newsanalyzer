@@ -1,7 +1,7 @@
 import { IAnalysis, IMarketData, TLanguage } from '../models/analyses';
 import { IHeadlines, TNewsPaper } from '../models/headlines';
 import { DateTime } from 'luxon';
-import { getSentimentEN, ISentimentFunction } from './sentiment';
+import { ISentimentFunction } from './sentiment';
 
 export const createAnalysis = async (
   headlines: IHeadlines[],
@@ -65,12 +65,9 @@ export const createAnalysis = async (
         sentiments.find((entry) => entry.sentence === headline.headline)
           ?.score || 0;
       headline.sentiment = sentiment;
-      // const sentiment = sentiments.find(
-      //   (entry) => entry.sentence === headline.headline
-      // ).score;
       totalEnglishSentiment += headline.share_of_total * headline.sentiment;
       shareOfTotalEnglishHeadlines += headline.share_of_total;
-      console.log(headline);
+      // console.log(headline);
     }
   }
 
