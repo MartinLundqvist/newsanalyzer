@@ -11,7 +11,7 @@ import { getSentiments } from '../controllers/fetchSentiments';
  * Be careful with this sucker...
  */
 
-export const seed = async () => {
+export const seed = async (numDays: number) => {
   await connectToDB();
   const todayCET = DateTime.now().setZone('Europe/Paris').startOf('day');
   const market = await createMarketDataArray();
@@ -21,7 +21,7 @@ export const seed = async () => {
     return;
   }
 
-  for (let days = 0; days < 60; days++) {
+  for (let days = 0; days < numDays; days++) {
     const previousDay = todayCET.minus({ days: days });
     console.log(previousDay.toString());
     const headlines = await getHeadlines(previousDay);
@@ -43,4 +43,4 @@ export const seed = async () => {
   }
 };
 
-seed();
+seed(7);
