@@ -92,7 +92,17 @@ const parseRawMarketData = (
     data: [] as IMarketDataPoint[],
   };
 
+  // TODO: Some debugging code here
+  console.log(
+    `Parsing market data for ${data.marketSummaryResponse.result.length} markets.`
+  );
+
   data.marketSummaryResponse.result.forEach((market) => {
+    //TODO:  Some debugging code
+    console.log(
+      `Found data for symbol: ${market.symbol} with price ${market.regularMarketPrice.raw}.`
+    );
+
     results.data.push({
       market: market.fullExchangeName,
       price: market.regularMarketPrice.raw,
