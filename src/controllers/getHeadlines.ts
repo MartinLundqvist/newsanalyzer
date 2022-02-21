@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
-import { IHeadlines, NewsPaperHeadlinesModel } from '../models/headlines';
+import { NewsPaperHeadlinesModel } from '../models/headlines';
+import { IHeadlines } from '../types';
 
 export const getHeadlines = async (date: DateTime): Promise<IHeadlines[]> => {
   // Create the daterange

@@ -1,11 +1,11 @@
 import { createAnalysis } from './analyzer';
 import { connectToDB } from '../models/database';
-import { IMarketData } from '../models/analyses';
 import { saveAnalysis } from '../controllers/saveAnalysis';
 import { getHeadlines } from '../controllers/getHeadlines';
 import { createMarketDataArray } from './createMarketDataArray';
 import { DateTime } from 'luxon';
 import { getSentiments } from '../controllers/fetchSentiments';
+import { IMarketData } from '../types';
 
 /**
  * Be careful with this sucker...

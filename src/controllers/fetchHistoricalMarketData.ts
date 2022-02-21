@@ -1,20 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-
-export interface IHistoricalMarketDataEntry {
-  symbol: string;
-  timestamp: number[];
-  previousClose: any;
-  chartPreviousClose: number;
-  dataGranularity: number;
-  close: number[];
-  end: any;
-  start: any;
-}
-
-export interface IHistoricalMarketData {
-  [key: string]: IHistoricalMarketDataEntry;
-}
+import { IHistoricalMarketData } from '../types';
 
 dotenv.config();
 

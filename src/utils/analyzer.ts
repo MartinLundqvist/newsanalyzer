@@ -1,6 +1,11 @@
-import { IAnalysis, IMarketData, TLanguage } from '../models/analyses';
-import { IHeadlines, TNewsPaper } from '../models/headlines';
 import { DateTime } from 'luxon';
+import {
+  IAnalysis,
+  IHeadlines,
+  IMarketData,
+  TLanguage,
+  TNewsPaper,
+} from '../types';
 import { ISentimentFunction } from './sentiment';
 
 export const createAnalysis = async (

@@ -1,4 +1,4 @@
-import { IMarketSummaryResponse } from '../controllers/fetchMarketData';
+import { IMarketSummaryResponse } from '../types';
 
 export const testData: IMarketSummaryResponse = {
   marketSummaryResponse: {

@@ -1,4 +1,5 @@
-import { IAnalysis, AnalysisModel } from '../models/analyses';
+import { AnalysisModel } from '../models/analyses';
+import { IAnalysis } from '../types';
 
 export const saveAnalysis = async (analysis: IAnalysis) => {
   try {

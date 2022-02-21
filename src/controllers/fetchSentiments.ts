@@ -1,13 +1,7 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
+import { ISentimentResponse } from '../types';
 import { ISentiment, ISentimentFunction } from '../utils/sentiment';
-
-export interface ISentimentResponse {
-  sentiment: {
-    score: number;
-    sentence: string;
-  }[];
-}
 
 dotenv.config();
 
