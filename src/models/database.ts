@@ -10,9 +10,12 @@ const DB_STRING =
 
 export const connectToDB = async () => {
   try {
-    console.log('Mongoose ready state is: ' + mongoose.connection.readyState);
+    if (mongoose.connection.readyState === 1) {
+      console.log('Mongoose connection alive.');
+      return;
+    }
+
     await mongoose.connect(DB_STRING || '');
-    console.log('Mongoose ready state is: ' + mongoose.connection.readyState);
     console.log('Connected to mongodb');
   } catch (err) {
     console.log(err);
