@@ -10,7 +10,8 @@
     "start": "NODE_ENV=production node build/index.js",
     "seed:dev": "ts-node src/utils/seeder.ts",
     "seed:prod": "NODE_ENV=production ts-node src/utils/seeder.ts",
-    "updateyesterday": "NODE_ENV=production ts-node src/tests/updateYesterday.ts"
+    "updateyesterday:prod": "NODE_ENV=production ts-node src/tests/updateYesterday.ts",
+    "updateyesterday:dev": "NODE_ENV=development ts-node src/tests/updateYesterday.ts"
   },
   "keywords": [],
   "author": "",

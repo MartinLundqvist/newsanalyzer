@@ -36,11 +36,12 @@ const test_createAnalysis = async (dayOffset: number) => {
     yesterdayStartCET,
     getSentiments
   );
-  console.log(JSON.stringify(headlineAnalysis.average_sentiment, null, 2));
+  // console.log(JSON.stringify(headlineAnalysis.average_sentiment, null, 2));
+  console.log(headlineAnalysis);
 };
 
-// test_createAnalysis(11);
+test_createAnalysis(0);
 
 // test_getSentiment();
 
-test_getLanguage();
+// test_getLanguage();
