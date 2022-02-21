@@ -1,11 +1,6 @@
 import { DateTime } from 'luxon';
-import {
-  IAnalysis,
-  IHeadlines,
-  IMarketData,
-  TLanguage,
-  TNewsPaper,
-} from '../types';
+import { IAnalysis, IHeadlines, IMarketData } from '../types';
+import { getLanguage } from './getLanguage';
 import { ISentimentFunction } from './sentiment';
 
 export const createAnalysis = async (
@@ -86,15 +81,4 @@ export const createAnalysis = async (
   results.headlines.sort((a, b) => b.count - a.count);
 
   return results;
-};
-
-export const getLanguage = (newspaper: TNewsPaper): TLanguage => {
-  switch (newspaper) {
-    case 'WSJ':
-      return 'en';
-    case 'Guardian':
-      return 'en';
-    default:
-      return 'se';
-  }
 };

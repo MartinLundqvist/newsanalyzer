@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "test": "NODE_ENV=development ts-node src/data_tests/tests.ts",
+    "test": "NODE_ENV=development ts-node src/tests/tests.ts",
     "dev": "NODE_ENV=development nodemon src/index.ts",
     "build": "rm -rf build && tsc",
     "start": "NODE_ENV=production node build/index.js",

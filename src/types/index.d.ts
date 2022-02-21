@@ -102,7 +102,14 @@ export type TNewsPaper =
   | 'DN'
   | 'Expressen'
   | 'WSJ'
-  | 'Guardian';
+  | 'Guardian'
+  // Below this line are new ones
+  | 'WashingtonPost'
+  | 'BBC'
+  | 'CNN'
+  | 'DailyMail'
+  | 'NYTimes'
+  | 'Yahoo';
 
 export type TLanguage = 'en' | 'se';
 

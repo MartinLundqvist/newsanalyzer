@@ -3,11 +3,15 @@ import { getMarketData } from '../controllers/fetchMarketData';
 import { getSentiments } from '../controllers/fetchSentiments';
 import { getHeadlines } from '../controllers/getHeadlines';
 import { connectToDB } from '../models/database';
-import { createAnalysis, getLanguage } from '../utils/analyzer';
+import { createAnalysis } from '../utils/analyzer';
+import { getLanguage } from '../utils/getLanguage';
 import { getSentimentEN } from '../utils/sentiment';
 
 const test_getLanguage = () => {
   console.log(getLanguage('Aftonbladet'));
+  console.log(getLanguage('WashingtonPost'));
+  console.log(getLanguage('SVD'));
+  console.log(getLanguage('Yahoo'));
 };
 
 const test_getSentiment = async () => {
@@ -37,4 +41,6 @@ const test_createAnalysis = async (dayOffset: number) => {
 
 // test_createAnalysis(11);
 
-test_getSentiment();
+// test_getSentiment();
+
+test_getLanguage();
