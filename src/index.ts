@@ -19,10 +19,13 @@ const start = async () => {
 
   console.log('Node environment is set to ' + ENV);
 
+  await connectToDB();
+
   const job = new CronJob(
     '0 0 5 * * *',
     async () => {
-      await connectToDB();
+      const start = new Date();
+      console.log('<-Start-------------------------------------------->');
       const todayCET = DateTime.now().setZone('Europe/Paris');
       const yesterdayStartCET = todayCET.minus({ days: 1 }).startOf('day');
       const headlines = await getHeadlines(yesterdayStartCET);
@@ -34,6 +37,12 @@ const start = async () => {
         getSentiments
       );
       await saveAnalysis(headlineAnalysis);
+      console.log(
+        'Job completed in ' +
+          (new Date().getSeconds() - start.getSeconds()) +
+          ' seconds'
+      );
+      console.log('<-End---------------------------------------------->');
     },
     null,
     false,

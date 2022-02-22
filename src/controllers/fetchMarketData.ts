@@ -55,9 +55,9 @@ const parseRawMarketData = (
 
   data.marketSummaryResponse.result.forEach((market) => {
     //TODO:  Some debugging code
-    console.log(
-      `Found data for symbol: ${market.symbol} with price ${market.regularMarketPrice.raw}.`
-    );
+    // console.log(
+    //   `Found data for symbol: ${market.symbol} with price ${market.regularMarketPrice.raw}.`
+    // );
 
     results.data.push({
       market: market.fullExchangeName,
