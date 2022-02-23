@@ -28,8 +28,12 @@ const start = async () => {
       console.log('<-Start-------------------------------------------->');
       const todayCET = DateTime.now().setZone('Europe/Paris');
       const yesterdayStartCET = todayCET.minus({ days: 1 }).startOf('day');
-      const headlines = await getHeadlines(yesterdayStartCET);
-      const marketData = await getMarketData(yesterdayStartCET);
+      // const headlines = await getHeadlines(yesterdayStartCET);
+      // const marketData = await getMarketData(yesterdayStartCET);
+      const [headlines, marketData] = await Promise.all([
+        getHeadlines(yesterdayStartCET),
+        getMarketData(yesterdayStartCET),
+      ]);
       const headlineAnalysis = await createAnalysis(
         headlines,
         marketData,
