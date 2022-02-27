@@ -34,6 +34,7 @@ export const createAnalysis = async (
         let language = getLanguage(entry.newspaper);
         results.headlines.push({
           headline: headline.headline,
+          url: headline.url,
           newspaper: entry.newspaper,
           language: language,
           count: 0,

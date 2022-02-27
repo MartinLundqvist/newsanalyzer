@@ -30,6 +30,10 @@ const HeadlineEntrySchema = new mongoose.Schema<IHeadlineEntry>({
     type: String,
     default: 'Empty',
   },
+  url: {
+    type: String,
+    default: 'Empty',
+  },
   language: {
     type: String,
     default: 'se',
