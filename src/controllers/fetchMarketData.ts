@@ -1,11 +1,7 @@
 import dotenv from 'dotenv';
 import axios from 'axios';
 import { DateTime } from 'luxon';
-import {
-  IMarketData,
-  IMarketDataPoint,
-  IMarketSummaryResponse,
-} from '../types';
+import { IMarketData, IMarketDataPoint, IMarketQuoteResponse } from '../types';
 
 /**
  * These are the symbols of the markets that are fetched:
@@ -22,7 +18,7 @@ export const getMarketData = async (date: DateTime): Promise<IMarketData> => {
 
   try {
     // const response = testData; // Debug
-    const response = await axios.get<IMarketSummaryResponse>(URL, {
+    const response = await axios.get<IMarketQuoteResponse>(URL, {
       headers: { Accept: 'application/json', 'X-API-KEY': API_KEY },
     });
     const parsed = parseRawMarketData(response.data, date);
@@ -40,7 +36,7 @@ export const getMarketData = async (date: DateTime): Promise<IMarketData> => {
 };
 
 const parseRawMarketData = (
-  data: IMarketSummaryResponse,
+  data: IMarketQuoteResponse,
   date: DateTime
 ): IMarketData => {
   const results = {
@@ -50,10 +46,10 @@ const parseRawMarketData = (
 
   // TODO: Some debugging code here
   console.log(
-    `Parsing market data for ${data.marketSummaryResponse.result.length} markets.`
+    `Parsing market data for ${data.quoteResponse.result.length} markets.`
   );
 
-  data.marketSummaryResponse.result.forEach((market) => {
+  data.quoteResponse.result.forEach((market) => {
     //TODO:  Some debugging code
     // console.log(
     //   `Found data for symbol: ${market.symbol} with price ${market.regularMarketPrice.raw}.`
@@ -61,7 +57,7 @@ const parseRawMarketData = (
 
     results.data.push({
       market: market.fullExchangeName,
-      price: market.regularMarketPrice.raw,
+      price: market.regularMarketPrice,
       symbol: market.symbol,
     });
   });

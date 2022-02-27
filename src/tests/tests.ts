@@ -37,7 +37,7 @@ const test_createAnalysis = async (dayOffset: number) => {
     getSentiments
   );
   // console.log(JSON.stringify(headlineAnalysis.average_sentiment, null, 2));
-  console.log(headlineAnalysis);
+  console.log(JSON.stringify(headlineAnalysis, null, 2));
 };
 
 test_createAnalysis(0);
