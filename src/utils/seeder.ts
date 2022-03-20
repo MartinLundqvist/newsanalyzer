@@ -43,4 +43,4 @@ export const seed = async (numDays: number) => {
   }
 };
 
-seed(60);
+seed(20);
