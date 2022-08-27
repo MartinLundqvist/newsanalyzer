@@ -8,7 +8,8 @@ import { getSentiments } from '../controllers/fetchSentiments';
 import { IMarketData } from '../types';
 
 /**
- * Be careful with this sucker...
+ * Be careful with this sucker... I analyzses and updates the databse from <today> minus numDays back
+ * @numDays Number of days to analyze, counting backwards from today.
  */
 
 export const seed = async (numDays: number) => {
@@ -43,4 +44,4 @@ export const seed = async (numDays: number) => {
   }
 };
 
-seed(20);
+seed(30);
