@@ -9,6 +9,9 @@ const DB_STRING =
   ENV === 'production' ? process.env.DB_STRING : process.env.DB_STRING_LOCAL;
 
 export const connectToDB = async () => {
+  console.log('Connecting to News database in ' + ENV + ' mode.');
+  console.log(DB_STRING);
+
   try {
     if (mongoose.connection.readyState === 1) {
       console.log('Mongoose connection alive.');

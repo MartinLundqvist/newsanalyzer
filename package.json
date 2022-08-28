@@ -11,7 +11,9 @@
     "seed:dev": "ts-node src/utils/seeder.ts",
     "seed:prod": "NODE_ENV=production ts-node src/utils/seeder.ts",
     "updateyesterday:prod": "NODE_ENV=production ts-node src/tests/updateYesterday.ts",
-    "updateyesterday:dev": "NODE_ENV=development ts-node src/tests/updateYesterday.ts"
+    "updateyesterday:dev": "NODE_ENV=development ts-node src/tests/updateYesterday.ts",
+    "cleandb:dev": "NODE_ENV=development ts-node src/utils/cleanDB.ts",
+    "cleandb:prod": "NODE_ENV=production ts-node src/utils/cleanDB.ts"
   },
   "keywords": [],
   "author": "",
